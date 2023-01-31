@@ -53,7 +53,37 @@ function checkInputs() {
 
   if (formIsValid) {
     console.log("O formulário está 100% válido!");
+    const finalData = {
+      name: usernameValue,
+      email: emailValue,
+    };
+
+    sendData(finalData);
   }
+}
+async function sendData(data) {
+  try {
+    var myHeaders = new Headers();
+
+    var myInit = {
+      method: "POST",
+      headers: myHeaders,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    var myRequest = new Request("https://localhost:7199/api/Usuario", myInit);
+
+    fetch(myRequest)
+      .then(function (response) {
+        return response.blob();
+      })
+      .then(function () {
+        console.log("deu certo");
+      });
+  } catch (error) {}
 }
 
 function setErrorFor(input, message) {
